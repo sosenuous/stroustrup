@@ -1,68 +1,92 @@
 #include <iostream>
 
 
-
-
-
-
-
-
-
-
 void print(int a[], int size)
 {
-
   for (int i = 0 ; i < size ; i++) {
     std::cout << a[i] << '\n';
   }
 
-
   // print them to cou 
 }
 
-retretret
 
-void swap(int *x , int *y)
+void swap(int & x , int & y)
 {
-  int z = * y;
-  *y = *x; 
-  *x = z;
-
-  x ++;
-  *y = x [108];
+  int z = y;
+  y = x; 
+  x = z;
 }
 
-void swap2(const int &x , const int &y) {
-  int z = x;
-  x= y;
-  y = z;
 
-}
 
+
+class Vector {
+
+  int len;
+  int * data;
+
+  public:
+  Vector(int n) : len(n), data (new int[n]) { 
+    for (int i = 0; i < len; i++) data[i] = 0; 
+  }
+
+  Vector(int n , const int  a[] ) : len (n), data(new int[n]) 
+  { 
+    for (auto i = 0; i < n; ++i) data[i] = a[i];
+  }
+
+
+  ~Vector() {
+    delete [] data;
+  }
+
+  int &operator[](int i) {
+    return data[i];
+  }
+
+  int length() { return len; }
+
+
+  protected:
+ 
+ 
+};
+
+/* 
+[ ][ ]  --->   [ ][ ][ ][ ][ ][ ][ ] 
+
+
+*/
 
 
 
 using namespace std;
 
+
+ 
+
+
+
 int main() 
 {
-  // define an array of 10 integers
-  int v[] = {1,2,3,4,5,6,8,9,10};
+  auto x = 1;
+  auto y = 0;
 
+  Vector v(5); 
+  v[0] = 42;  // v.operator[](0) = 42;
+  cout << v[0]; // v.operator[](0);
 
-  print( v , 10);
+  swap(x, y);
 
-  int a = 1, b = 10;
-  cout << "a == " << a <<", b == " << b << '\n';
-  swap(&a, &b);
-  cout << "a == " << a <<", b == " << b << '\n';
-  swap2(a,b);
+  cout << " x == " << x << " , y == " << y << "\n";
 
-  cout << "a == " << a <<", b == " << b << '\n';
+  int a[]= {1,2,3,4,5};
+  Vector w(5, a);
+  for (auto i = 0 ; i< 5; ++i) cout << w[i] << "," ;
+  cout << "\n";
 
-
-  // ( a == 10 && b = 1);
-
+  
 
   return 0;
-}
+} ///  v.~Vector() ; w.~Vector();

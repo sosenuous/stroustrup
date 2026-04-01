@@ -136,16 +136,11 @@ cout << "size = " << v1.length() << "\n";
 for (auto i = 0; i < v1.length() ; i++) cout << v1[i];
 
 
-  Container cc(20);
-
-  Container *c[2]  = {new Vector(0),new Vector(0)};
+  Container *pcc = new Vector(20);
 
 
   
-  for (auto i = 0 ;  i < 100 ; i++)  cout << c[i] -> vtbl[0]();
-
-
-
+  
   SuperVector sv;
 
   cout << sv.length();

@@ -8,7 +8,7 @@ class Heap : public Container {
   int data;
   Heap * left, *right ; 
 
-private:
+public:
 
   virtual int &operator[](int i) const; 
   virtual ~Heap();
@@ -16,9 +16,12 @@ private:
   void add(int );
   int min() const;
 
-public:
-    Heap() : data(0), left(nullptr), right(nullptr) {}
-    void add(int value);
+  Heap() : Container(0), left(nullptr), right(nullptr) {}
+  void add(int value);
+
+private:
+
+  void add_to_children(int data) ;
 
 };
 

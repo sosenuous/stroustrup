@@ -145,6 +145,10 @@ for (auto i = 0; i < v1.length() ; i++) cout << v1[i];
 
   cout << sv.length();
 
+  if (sv.empty()) {
+    cout << "SuperVector is empty\n";
+  }
+
   return 0;
 
 

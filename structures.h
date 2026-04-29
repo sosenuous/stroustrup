@@ -7,7 +7,9 @@ protected:
 public:
 
   Container(int s) : size(s) {}
- 
+
+
+  bool empty() const { return size == 0; }
   virtual int length() const { return size; }; 
   virtual int &operator[](int i) const = 0; 
   virtual ~Container() {};

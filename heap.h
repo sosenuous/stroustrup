@@ -9,15 +9,17 @@ class Heap : public Container {
   Heap * left, *right ; 
 
 public:
-
-  virtual int &operator[](int i) const; 
+  Heap() : Container(0), left(nullptr), right(nullptr) {}
+  Heap(int d) : Container(1) , left(nullptr), right(nullptr), data(d) {}
   virtual ~Heap();
 
-  void add(int );
-  int min() const;
+  virtual int &operator[](int i) const; 
 
-  Heap() : Container(0), left(nullptr), right(nullptr) {}
-  void add(int value);
+  void add(int ); // adds a new element
+  void pop() ;    // removes the top element
+  int peek() const {
+    return data;
+  }
 
 private:
 

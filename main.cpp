@@ -1,7 +1,6 @@
 #include <iostream>
 #include "structures.h"
-
-
+#include "smartPtr.h"
 
 void print(int a[], int size)
 {
@@ -70,11 +69,27 @@ struct Person {
 };
 
 
+template <typename T, int S>
+class Buffer {
+  T buffer [S];
+
+  public:
+
+
+  int size() const { return S;}
+};
+
+
 
 
 
 int main() 
 {
+  Buffer<Vector<int>, 20> b ;
+  cout << b.size();
+
+
+
   auto x = 1;
   auto y = 0;
 
@@ -87,7 +102,7 @@ int main()
 
 
 
-  Vector v(5); 
+  Vector<int> v(5, 0); 
   v[0] = 42;  // v.operator[](0) = 42;
 
   try { 
@@ -107,11 +122,11 @@ int main()
   cout << " x == " << x << " , y == " << y << "\n";
 
   int a[]= {1,2,3,4,5};
-  Vector w(5, a);
+  Vector<int> w(5, a);
   for (auto i = 0 ; i< 5; ++i) cout << w[i] << "," ;
   cout << "\n";
 
-  Vector u(w);
+  Vector<int> u(w);
 
   //u = v;
 
@@ -136,21 +151,49 @@ cout << "size = " << v1.length() << "\n";
 for (auto i = 0; i < v1.length() ; i++) cout << v1[i];
 
 
-  Container *pcc = new Vector(20);
+  Container<int> *pcc = new Vector<int>(20, 0);
 
 
   
   
-  SuperVector sv;
+  SuperVector<int> sv;
 
   cout << sv.length();
 
+  smart_ptr<int> arr(new int[200]);
+
+  for (auto i = 0 ; i < 200; i++) arr[i] = i;  
+
+  
+  Multiplier m(100);
+
+  vector<int> intv = m.multiply(30);
+  vector<string> stv = m.multiply("hello");
+
+ 
   return 0;
 
 
 
 
 
-} ///  v.~Vector() ; w.~Vector();
+} ///  v.~Vector() ; w.~Vector(); arr.~smart_ptr()
 
 
+
+
+
+class Multiplier {
+  int n;
+public:
+    Multiplier(int m)  : n(m) {};
+
+    template <typename T> vector<T>  multiply(T x) {
+      std::vector<T> ret;
+      for (int i = 0  ; i < n ; i++) ret.append(x);
+
+      return ret;
+    }
+
+
+  };

@@ -1,56 +1,58 @@
 #ifndef __STRUCTURES__
 #define __STRUCTURES__
 
+template <typename T> 
 class Container {
-protected:
   int size;
 public:
 
   Container(int s) : size(s) {}
  
   virtual int length() const { return size; }; 
-  virtual int &operator[](int i) const = 0; 
+  virtual T &operator[](int i) const = 0; 
   virtual ~Container() {};
 };
 
 
-class Vector : public Container {
-  int * data;
+template <typename T> 
+class Vector : public Container<T> {
+
+  T* data; 
 
 public:
 
-  Vector() : Container(0) { std :: cout << length(); }
-  Vector(int n) ;
-  Vector(int n , const int  a[] )  ;
+  Vector() : Container<T>(0) { std :: cout << Container<T>::length(); }
+  Vector(int n, T z) ;
+  Vector(int n , const T  a[] )  ;
   
   // copy constructor 
-  Vector(const Vector & rhs) : Container(rhs) {
-    data = new int[length()]; 
+  Vector(const Vector & rhs) : Container<T>(rhs) {
+    data = new T[Container<T>::length()]; 
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < Container<T>::length(); i++)
       data[i] = rhs.data[i]; 
   }
 
-Vector(std::initializer_list<int> list) : Container(list.size()) {
-  data = new int[size]; 
-  int* ptr = data; 
-  for (int val : list) {
-    *ptr++ = val;
+  Vector(std::initializer_list<T> list) : Container<T>(list.size()) {
+    data = new T[Container<T>::length()]; 
+    T* ptr = data; 
+    for (T val : list) {
+      *ptr++ = val;
+    } 
   }
-}
 
 
 // int size() { return size * size;}
 
 
   // assignment operator 
-  inline Vector & operator =(const Vector &rhs) {
-    Container::operator=(rhs);
+  inline Vector<T> & operator =(const Vector<T> &rhs) {
+    Container<T>::operator=(rhs);
 
     if (data) delete [] data;
-    data = new int[size]; 
+    data = new T[Container<T>::length()]; 
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < Container<T>::length(); i++)
       data[i] = rhs.data[i]; 
 
     std::cout<<"operator=";
@@ -63,7 +65,7 @@ Vector(std::initializer_list<int> list) : Container(list.size()) {
   ~Vector();
 
   // move constructor
-  Vector(Vector && rhs) : Container(rhs) {
+  Vector(Vector<T> && rhs) : Container<T>(rhs) {
     data = rhs.data; 
    
     rhs.data = nullptr;
@@ -71,8 +73,8 @@ Vector(std::initializer_list<int> list) : Container(list.size()) {
   }
 
   // move assignment
-  Vector & operator=(Vector && rhs) {
-    Container::operator=(rhs);
+  Vector<T> & operator=(Vector<T> && rhs) {
+    Container<T>::operator=(rhs);
     
     if (this != &rhs) { 
       if (data) delete[] data; 
@@ -84,13 +86,12 @@ Vector(std::initializer_list<int> list) : Container(list.size()) {
   }
 
   // indexing
-  int &operator[](int i) const override {
-    if (i >=0 && i < size)
+  T &operator[](int i) const override {
+    if (i >=0 && i < Container<T>::length())
       return data[i];
     else throw std::out_of_range("Vector::operator[]");
   }
       
-  int length() const override { return size; }
 
  
 };
@@ -98,14 +99,16 @@ Vector(std::initializer_list<int> list) : Container(list.size()) {
 
   // implement operator+ that adds two vectors component-wise 
   // c = a + b ; // where a and b are Vectors
-  Vector operator+(const Vector &a , const Vector &b); 
+template <typename T>
+Vector<T> operator+(const Vector<T> &a , const Vector<T> &b); 
 
 
-class SuperVector : public Vector {
+template <typename T>
+class SuperVector : public Vector<T>{
 public:
-  SuperVector() : Vector() {}
+  SuperVector() : Vector<T>() {}
 
-  int length() const override { return Vector::length() + 10;  }
+  int length() const override { return Vector<T>::length() + 10;  }
 
 };
 

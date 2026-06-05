@@ -1,14 +1,17 @@
 #ifndef __STRUCTURES__
 #define __STRUCTURES__
 
+#include <iostream>
+
 template <typename T> 
 class Container {
-  int size;
+protected:
+  int s;
 public:
 
-  Container(int s) : size(s) {}
+  Container(int ss) : s(ss) {}
  
-  virtual int length() const { return size; }; 
+  virtual int size() const { return s; }; 
   virtual T &operator[](int i) const = 0; 
   virtual ~Container() {};
 };
@@ -21,20 +24,20 @@ class Vector : public Container<T> {
 
 public:
 
-  Vector() : Container<T>(0) { std :: cout << Container<T>::length(); }
+  Vector() : Container<T>(0) { std :: cout << Container<T>::size(); }
   Vector(int n, T z) ;
   Vector(int n , const T  a[] )  ;
   
   // copy constructor 
   Vector(const Vector & rhs) : Container<T>(rhs) {
-    data = new T[Container<T>::length()]; 
+    data = new T[Container<T>::size()]; 
 
-    for (int i = 0; i < Container<T>::length(); i++)
+    for (int i = 0; i < Container<T>::size(); i++)
       data[i] = rhs.data[i]; 
   }
 
   Vector(std::initializer_list<T> list) : Container<T>(list.size()) {
-    data = new T[Container<T>::length()]; 
+    data = new T[Container<T>::size()]; 
     T* ptr = data; 
     for (T val : list) {
       *ptr++ = val;
@@ -42,17 +45,14 @@ public:
   }
 
 
-// int size() { return size * size;}
-
-
   // assignment operator 
   inline Vector<T> & operator =(const Vector<T> &rhs) {
     Container<T>::operator=(rhs);
 
     if (data) delete [] data;
-    data = new T[Container<T>::length()]; 
+    data = new T[Container<T>::size()]; 
 
-    for (int i = 0; i < Container<T>::length(); i++)
+    for (int i = 0; i < Container<T>::size(); i++)
       data[i] = rhs.data[i]; 
 
     std::cout<<"operator=";
@@ -69,7 +69,7 @@ public:
     data = rhs.data; 
    
     rhs.data = nullptr;
-    rhs.size = 0;
+    rhs.s = 0;
   }
 
   // move assignment
@@ -87,7 +87,7 @@ public:
 
   // indexing
   T &operator[](int i) const override {
-    if (i >=0 && i < Container<T>::length())
+    if (i >=0 && i < Container<T>::size())
       return data[i];
     else throw std::out_of_range("Vector::operator[]");
   }
@@ -108,7 +108,7 @@ class SuperVector : public Vector<T>{
 public:
   SuperVector() : Vector<T>() {}
 
-  int length() const override { return Vector<T>::length() + 10;  }
+  int size() const override { return Vector<T>::size() + 10;  }
 
 };
 

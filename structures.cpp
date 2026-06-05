@@ -13,7 +13,7 @@ Vector<T> operator+(const Vector<T> &a , const Vector<T> &b);
 template <typename T>
 Vector<T>::Vector(int n, T z) : Container<T>(n), data (new int[n]) { 
     assert(n >= 0);
-    for (int i = 0; i < Container<T>::length(); i++) data[i] = z; 
+    for (int i = 0; i < Container<T>::size(); i++) data[i] = z; 
 }
 
 template <typename T>
@@ -32,13 +32,13 @@ Vector<T>::~Vector() {
   // c = a + b ; // where a and b are Vectors
 template <typename T>
 Vector<T> operator+(const Vector<T> &a , const Vector<T> &b) { 
-    if (a.length() != b.length()) { 
-        throw std::length_error("vector should obvs be the same length duh");
+    if (a.size() != b.size()) { 
+        throw std::length_error("vector should obvs be the same size duh");
     }
     
-    Vector<T> result(a.length()); 
+    Vector<T> result(a.size(),0); 
     
-    for (int i = 0; i < a.length(); i++) { 
+    for (int i = 0; i < a.size(); i++) { 
       result[i] = a[i] + b[i]; 
     }
     

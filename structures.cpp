@@ -1,3 +1,6 @@
+#ifndef __STRUCTURES_CPP__
+#define __STRUCTURES_CPP__
+
 #include <iostream>
 #include "structures.h"
 #include <assert.h>
@@ -55,3 +58,5 @@ Vector::Vector(std::initializer_list<int> lst) : len(lst.size()), data(new int [
 
 
 */
+
+#endif

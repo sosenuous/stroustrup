@@ -66,21 +66,32 @@ template <typename T>
 void Heap<T>::pop() 
 {
   if (this->size()==0) throw std::out_of_range("Heap::pop");
-  else
-  if (!left) { 
-    data = right-> data; 
-    right-> pop();
-  } else if (!right) { 
-    data = left->data; 
-    left->pop();
-  } else // both left and right != nullptr
-  if (left->peek() < right->peek()) {
-    data = left-> peek();
-    left->pop();
-  } else {
-    data = right->peek();
-    right->pop();
+  else {
+    this -> s--;
+  
+    if (this -> size() == 1) {  // this size exactly 1, so there are no children. THe data to be popped
+    } else // size is >= 2  
+    if (!left) { 
+      data = right-> data; 
+      right-> pop();
+    } else if (!right) { 
+      data = left->data; 
+      left->pop();
+    } else // both left and right != nullptr
+    if (left->peek() < right->peek()) {
+      data = left-> peek();
+      left->pop();
+    } else {
+      data = right->peek();
+      right->pop();
+    }
   }
+
+  // clean up
+  //if (left && left-> size() == 0 ) { delete this -> left; this->left = nullptr;}
+  //if (right && right-> size() == 0 ) { delete this -> right; this -> right = nullptr;}
+
+
 }    
 
 template <typename T>

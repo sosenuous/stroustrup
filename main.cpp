@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "structures.h"
 #include "structures.cpp"
 #include "smartPtr.h"
@@ -194,7 +195,7 @@ int main()
 
   // 
 
-  std::vector<int> vv {1,56,3,2,6,8654,2,4,688};
+  std::vector<int> vv {0};
   std::vector<int> j = heap_sort_(vv);
 
   for (auto i = 0 ; i < j.size() ; ++i) {

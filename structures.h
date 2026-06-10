@@ -112,4 +112,7 @@ public:
 
 };
 
+
+#include "structures.cpp"
+
 #endif

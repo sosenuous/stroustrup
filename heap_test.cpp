@@ -183,6 +183,48 @@ static void test_heap_all_equal() {
   CHECK(count == 6);
 }
 
+static void test_heap_iterator() {
+  std::cout << "test_heap_iterator\n";
+
+  // Empty heap: begin() == end(), range-for body never runs.
+  Heap<int> empty;
+  CHECK(empty.begin() == empty.end());
+  for ([[maybe_unused]] int x : empty) CHECK(false);
+
+  // The iterator visits every element exactly once. Order is unspecified
+  // (heap only guarantees the root is smallest), so we compare the multiset
+  // of visited values against the input, sorted.
+  std::vector<int> input{5, 3, 8, 1, 9, 2, 7, 4, 6, 0, 3, 3};
+  Heap<int> h;
+  for (int v : input) h.add(v);
+
+  std::vector<int> visited;
+  for (int x : h) visited.push_back(x);          // range-based for
+  CHECK(visited.size() == static_cast<std::size_t>(h.size()));
+  check_eq(sorted(visited), sorted(input), "iterator visits all elements");
+
+  // The smallest element is the root, i.e. the first one begin() yields.
+  CHECK(*h.begin() == 0);
+
+  // Iterating does not modify the heap.
+  CHECK(h.size() == static_cast<int>(input.size()));
+  CHECK(h.peek() == 0);
+
+  // Manual increment (prefix and postfix) and operator-> behave.
+  auto it = h.begin();
+  CHECK(*it == 0);
+  auto same = it++;
+  CHECK(*same == 0);          // postfix returned the pre-increment value
+  std::size_t n = 1;          // already consumed the first element
+  for (; it != h.end(); ++it) ++n;
+  CHECK(n == input.size());
+
+  // cbegin()/cend() work too.
+  std::size_t c = 0;
+  for (auto i = h.cbegin(); i != h.cend(); ++i) ++c;
+  CHECK(c == input.size());
+}
+
 int main() {
   test_heap_sort();
   test_heap_add_size();
@@ -190,6 +232,7 @@ int main() {
   test_heap_pop_empty_throws();
   test_heap_interleaved();
   test_heap_all_equal();
+  test_heap_iterator();
 
   std::cout << "\n"
             << (g_checks - g_failures) << "/" << g_checks << " checks passed";

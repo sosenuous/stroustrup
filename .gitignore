@@ -1,0 +1,9 @@
+# Compiled binaries / build output
+a.out
+main
+heap_test
+*.o
+*.out
+
+# macOS
+.DS_Store

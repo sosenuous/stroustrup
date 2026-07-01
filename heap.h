@@ -12,7 +12,7 @@ class Heap : public Container<T> {
 
 public:
   Heap() : Container<T>(0), left(nullptr), right(nullptr) {}
-  Heap(T d) : Container<T>(1) , left(nullptr), right(nullptr), data(d) {}
+  Heap(T d) : Container<T>(1), data(d), left(nullptr), right(nullptr) {}
   virtual ~Heap();
 
   virtual T &operator[](int i) const; 

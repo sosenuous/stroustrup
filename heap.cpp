@@ -1,3 +1,8 @@
+#ifndef __HEAP_CPP__
+#define __HEAP_CPP__
+
+#include <stdexcept>
+
 #include "heap.h"
 
 /*
@@ -65,37 +70,28 @@ void Heap<T>::add_to_children(T t) {
 template <typename T>
 void Heap<T>::pop() 
 {
-  if (this->size()==0) throw std::out_of_range("Heap::pop");
-  else {
-    this -> s--;
-  
-    if (this -> size() == 1) {  // this size exactly 1, so there are no children. THe data to be popped
-    } else // size is >= 2  
-    if (!left) { 
-      data = right-> data; 
-      right-> pop();
-    } else if (!right) { 
-      data = left->data; 
-      left->pop();
-    } else // both left and right != nullptr
-    if (left->peek() < right->peek()) {
-      data = left-> peek();
-      left->pop();
-    } else {
-      data = right->peek();
-      right->pop();
-    }
+  if (this->size() == 0) throw std::out_of_range("Heap::pop");
+
+  this->s--;
+
+  if (!left && !right) return;          // leaf: nothing to pull up
+
+  if (!right || (left && left->peek() < right->peek())) {
+    data = left->peek();
+    left->pop();
+    if (left->size() == 0) { delete left; left = nullptr; }
+  } else {
+    data = right->peek();
+    right->pop();
+    if (right->size() == 0) { delete right; right = nullptr; }
   }
-
-  // clean up
-  //if (left && left-> size() == 0 ) { delete this -> left; this->left = nullptr;}
-  //if (right && right-> size() == 0 ) { delete this -> right; this -> right = nullptr;}
-
-
-}    
+}
 
 template <typename T>
-T &Heap<T>::operator[](int i) const
+T &Heap<T>::operator[](int /*i*/) const
 {
-
+  // A heap has no meaningful random-access order; indexing is not supported.
+  throw std::logic_error("Heap::operator[] not implemented");
 }
+
+#endif

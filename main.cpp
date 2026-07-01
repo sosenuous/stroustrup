@@ -92,8 +92,8 @@ std::vector<T> heap_sort_(std::vector<T> const &v) {
 
   /// insert all elemenets of v into h
 
-  for (int i = 0 ; i < v.size(); ++i) { 
-    h.add(v[i]); 
+  for (std::size_t i = 0 ; i < v.size(); ++i) {
+    h.add(v[i]);
   }
   /// then remove them again
   std::vector<T> result; 
@@ -198,7 +198,7 @@ int main()
   std::vector<int> vv {0};
   std::vector<int> j = heap_sort_(vv);
 
-  for (auto i = 0 ; i < j.size() ; ++i) {
+  for (std::size_t i = 0 ; i < j.size() ; ++i) {
     std::cout << (j[i]);
   }
    

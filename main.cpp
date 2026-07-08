@@ -202,7 +202,53 @@ int main()
     std::cout << (j[i]);
   }
    
+
+  std::vector<int> v { 5, 4, 3, 2, 1};
+  std::sort(v.begin(), v.end());
+  auto it = std::find(v.begin(), v.end(), 4);
+
+  int data[10] = {0};
+  for (int &d : data) {
+    d = random() % 100;
+  }
+
+  class iterator_data {
+    int * ptr;
+    public:
+      iterator_data(int * p) : ptr(p) {}
+      int & operator*() { return *ptr; }
+      iterator_data & operator++() { ++ptr; return *this; }
+      bool operator!=(const iterator_data & other) const { return ptr != other.ptr; }
+  };
+
+  class container_for_data {
+    int * ptr;
+    public:
+      container_for_data(int * p) : ptr(p) {}
+      int & operator[](int i) { return ptr[i]; }
+      int size() const { return 10; }
+      iterator_data begin() { return iterator_data(ptr); }
+      iterator_data end() { return iterator_data(ptr + 10); }
+      
+  }  data_(data);
+
+
+  std::sort(data_.begin(), data_.end());
+
+  iterator_data fourtytwo = std::find(data_.begin(), data_.end(), 42);
+
+
+
+  if (fourtytwo != data_.end()) {
+    std::cout << "It is here! " << *fourtytwo << "\n";
+  } else {
+    std::cout << "Not found!\n";
+  }
+      
+
+
   return 0;
+
 
 
 

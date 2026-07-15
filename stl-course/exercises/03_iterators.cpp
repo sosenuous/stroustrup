@@ -76,6 +76,14 @@ int sumWithIterators(const vector<int>& v) {
     return total;
 }
 
+// Exercise 3.2.1 
+// Write a fold expression to sum every element of v. (Hint: use std::accumulate.) where the folding
+// expression is a lambda function that takes two arguments and returns their sum.
+int sumWithFold(const vector<int>& v) {
+    // TODO
+    return -1;
+}   
+
 // Exercise 3.3
 // Return the LARGEST value in v, found by hand with an iterator loop.
 // (You may assume v is not empty. Don't use library functions yet —
@@ -89,6 +97,13 @@ int maxWithIterators(const vector<int>& v) {
     return best;
 }
 
+// Exercise 3.3.1
+// Return the LARGEST value in v, found by hand with accumulate and a lambda function. 
+int maxWithFold(const vector<int>& v) {
+    // TODO
+    return -1;
+}
+
 // ----------------------------------------------------------------
 int main() {
     cout << "===== LEARN =====\n";
@@ -97,7 +112,10 @@ int main() {
     cout << "\n===== YOUR TURN =====\n";
     check("3.1 firstElement({7,8,9}) == 7",     firstElement({7, 8, 9}) == 7);
     check("3.2 sumWithIterators({1,2,3,4}) == 10", sumWithIterators({1, 2, 3, 4}) == 10);
+    check("3.2.1 sumWithFold({1,2,3,4}) == 10", sumWithFold({1, 2, 3, 4}) == 10);
     check("3.3 maxWithIterators({3,9,2,9,1}) == 9", maxWithIterators({3, 9, 2, 9, 1}) == 9);
+    check("3.3.1 maxWithFold({3,9,2,9,1}) == 9", maxWithFold({3, 9, 2, 9, 1}) == 9);
     check("3.3 maxWithIterators({-5,-2,-8}) == -2", maxWithIterators({-5, -2, -8}) == -2);
+    
     return 0;
 }

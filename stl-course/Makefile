@@ -4,6 +4,10 @@ CXXFLAGS ?= -std=c++17 -Wall -Wextra
 SRC := $(wildcard exercises/*.cpp)
 BIN := $(patsubst exercises/%.cpp,build/%,$(SRC))
 
+# Stray binaries/debug bundles that older builds dropped next to the sources.
+STRAY := $(patsubst exercises/%.cpp,exercises/%,$(SRC))
+DSYM  := $(wildcard exercises/*.dSYM)
+
 # `make`            -> build every lesson
 # `make 01_vector`  -> build AND run one lesson (by its filename, no .cpp)
 # `make clean`      -> remove the build folder
@@ -22,6 +26,6 @@ build/%: exercises/%.cpp | build
 	@./build/$*
 
 clean:
-	rm -rf build
+	rm -rf build $(STRAY) $(DSYM)
 
 .PHONY: all clean

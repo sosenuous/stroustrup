@@ -109,6 +109,14 @@ int total(const vector<int>& v) {
 // Return true if `target` is present anywhere in v, using std::find.
 bool contains(const vector<int>& v, int target) {
   // auto finder = [&](int value)
+  return false;
+}
+
+// Exercise 4.5.1
+// Write a containsIf function that returns true if a test function returns true for any element of v, using std::find_if.
+bool containsIf(const vector<int>& v, bool (*pred)(int)) {
+    // TODO
+    return false;
 }
 
 // ----------------------------------------------------------------
@@ -128,5 +136,6 @@ int main() {
     check("4.4 total({10,20,30}) == 60",       total({10, 20, 30}) == 60);
     check("4.5 contains({1,2,3}, 2) == true",  contains({1, 2, 3}, 2) == true);
     check("4.5 contains({1,2,3}, 9) == false", contains({1, 2, 3}, 9) == false);
+    check("4.5.1 containsIf({1,2,3}, [](int x){return (x == 2);}) == true", containsIf({1, 2, 3}, [](int x) { return (x == 2); }) == true);
     return 0;
 }

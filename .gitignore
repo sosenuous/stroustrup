@@ -4,6 +4,8 @@ main
 heap_test
 *.o
 *.out
+build/
+*.dSYM/
 
 # macOS
 .DS_Store

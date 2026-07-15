@@ -26,6 +26,8 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <algorithm>
+#include <iterator>
 using namespace std;
 
 void check(const string& name, bool ok) {
@@ -84,6 +86,54 @@ vector<int> dedupeSorted(const vector<int>& v) {
     return result;
 }
 
+// ================================================================
+//  GOING FURTHER 🔥
+// ----------------------------------------------------------------
+//  Two sets, side by side, unlock a whole family of "set operations":
+//    intersection (in BOTH), difference (in one but not the other),
+//    and the subset test (is everything in A also in B?).
+//
+//  The STL ships these as algorithms in <algorithm>:
+//      set_intersection, set_difference, includes, ...
+//  They all share one golden rule: 🔑 the INPUT ranges must be SORTED.
+//  Lucky us — a std::set always iterates in sorted order, so a set's
+//  begin()/end() satisfies that requirement for free.
+//
+//  The "output" algorithms write results one-by-one; hand them a
+//  back_inserter(v) so each result gets push_back'd onto your vector:
+//      set_intersection(a.begin(), a.end(),
+//                       b.begin(), b.end(),
+//                       back_inserter(out));
+// ================================================================
+
+// Exercise 6.4
+// Return the INTERSECTION of a and b — the values present in BOTH —
+// as a sorted vector<int>.
+// intersect({1,2,3,4}, {3,4,5,6}) -> {3,4}
+// intersect({1,2},    {3,4})      -> {}    (nothing in common)
+// Hint: std::set_intersection with back_inserter(result). Because a and b
+//       are std::set, their begin()/end() are already sorted — perfect input.
+vector<int> intersect(const set<int>& a, const set<int>& b) {
+    vector<int> result;
+    // TODO: use set_intersection(a.begin(), a.end(), b.begin(), b.end(),
+    //       back_inserter(result)); then return result
+    return result;
+}
+
+// Exercise 6.5
+// Return true if EVERY element of small is also in big
+// (i.e. small is a subset of big). The empty set is a subset of anything.
+// isSubset({2,3}, {1,2,3,4}) -> true
+// isSubset({2,5}, {1,2,3,4}) -> false   (5 is missing from big)
+// isSubset({},    {1,2,3})   -> true
+// Hint: std::includes(big..., small...) returns true when the SECOND range
+//       is fully contained in the FIRST. Mind the argument order: big first!
+//       Both come from std::set, so both ranges are already sorted.
+bool isSubset(const set<int>& small, const set<int>& big) {
+    // TODO: return includes(big.begin(), big.end(), small.begin(), small.end());
+    return false;
+}
+
 // ----------------------------------------------------------------
 int main() {
     cout << "===== LEARN =====\n";
@@ -96,5 +146,17 @@ int main() {
     check("6.2 hasDuplicate({1,2,1}) == true",   hasDuplicate({1, 2, 1}) == true);
     check("6.3 dedupeSorted({3,1,2,3,1}) == {1,2,3}",
           dedupeSorted({3, 1, 2, 3, 1}) == vector<int>({1, 2, 3}));
+
+    cout << "\n===== GOING FURTHER =====\n";
+    check("6.4 intersect({1,2,3,4},{3,4,5,6}) == {3,4}",
+          intersect({1, 2, 3, 4}, {3, 4, 5, 6}) == vector<int>({3, 4}));
+    check("6.4 intersect({1,2},{3,4}) == {}",
+          intersect({1, 2}, {3, 4}) == vector<int>({}));
+    check("6.5 isSubset({2,3},{1,2,3,4}) == true",
+          isSubset({2, 3}, {1, 2, 3, 4}) == true);
+    check("6.5 isSubset({2,5},{1,2,3,4}) == false",
+          isSubset({2, 5}, {1, 2, 3, 4}) == false);
+    check("6.5 isSubset({},{1,2,3}) == true",
+          isSubset({}, {1, 2, 3}) == true);
     return 0;
 }

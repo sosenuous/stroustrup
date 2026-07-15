@@ -30,6 +30,7 @@
 #include <string>
 #include <algorithm>   // sort, find, count, max_element, ...
 #include <numeric>     // accumulate
+#include <utility>     // pair, make_pair
 using namespace std;
 
 void check(const string& name, bool ok) {
@@ -119,6 +120,52 @@ bool containsIf(const vector<int>& v, bool (*pred)(int)) {
     return false;
 }
 
+// ================================================================
+//  GOING FURTHER 🔥  — combine algorithms, not loops
+// ================================================================
+//
+//  These two ask you to reach for slightly fancier tools and
+//  chain ideas together. Same rule as before: no hand-written
+//  loops — let the STL do the walking. 🚶
+//
+//  New faces:
+//      minmax_element(v.begin(), v.end())
+//          returns a std::pair of ITERATORS: {min_it, max_it}
+//          in ONE pass. Dereference each to get the values.
+//
+//      accumulate(v.begin(), v.end(), init, binaryOp)
+//          the 4-argument form: instead of just summing, you hand
+//          it your own combiner (a lambda!) and a starting value.
+//              sum     -> init 0, op  a + b
+//              product -> init 1, op  a * b
+//
+// ----------------------------------------------------------------
+
+// Exercise 4.6
+// Return BOTH the smallest and largest value of v as a pair {min, max},
+// in a SINGLE pass, using std::minmax_element.
+// (You may assume v is not empty.)
+//   minMax({4, 1, 9, 2})   -> {1, 9}
+//   minMax({5})            -> {5, 5}
+//   minMax({-3, -3, 0})    -> {-3, 0}
+// Hint: auto p = minmax_element(...);  then return {*p.first, *p.second};
+pair<int, int> minMax(const vector<int>& v) {
+    // TODO: use minmax_element and dereference both iterators
+    return {0, 0};   // placeholder — replace me
+}
+
+// Exercise 4.7
+// Return the PRODUCT of all elements of v, using std::accumulate with
+// a lambda as the combiner. (Empty vector -> 1, the multiplicative identity.)
+//   product({2, 3, 4})    -> 24
+//   product({5, -1, 2})   -> -10
+//   product({})           -> 1
+// Hint: accumulate(v.begin(), v.end(), 1, [](int a, int b){ return a * b; });
+int product(const vector<int>& v) {
+    // TODO: fold the vector down with multiplication, starting from 1
+    return -1;   // placeholder — replace me
+}
+
 // ----------------------------------------------------------------
 
 int main() {
@@ -137,5 +184,13 @@ int main() {
     check("4.5 contains({1,2,3}, 2) == true",  contains({1, 2, 3}, 2) == true);
     check("4.5 contains({1,2,3}, 9) == false", contains({1, 2, 3}, 9) == false);
     check("4.5.1 containsIf({1,2,3}, [](int x){return (x == 2);}) == true", containsIf({1, 2, 3}, [](int x) { return (x == 2); }) == true);
+
+    cout << "\n===== GOING FURTHER =====\n";
+    check("4.6 minMax({4,1,9,2}) == {1,9}",  minMax({4, 1, 9, 2}) == make_pair(1, 9));
+    check("4.6 minMax({5}) == {5,5}",        minMax({5}) == make_pair(5, 5));
+    check("4.6 minMax({-3,-3,0}) == {-3,0}", minMax({-3, -3, 0}) == make_pair(-3, 0));
+    check("4.7 product({2,3,4}) == 24",      product({2, 3, 4}) == 24);
+    check("4.7 product({5,-1,2}) == -10",    product({5, -1, 2}) == -10);
+    check("4.7 product({}) == 1",            product(vector<int>{}) == 1);
     return 0;
 }

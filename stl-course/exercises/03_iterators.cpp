@@ -26,6 +26,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
+#include <iterator>
 using namespace std;
 
 void check(const string& name, bool ok) {
@@ -104,6 +106,59 @@ int maxWithFold(const vector<int>& v) {
     return -1;
 }
 
+// ================================================================
+//  GOING FURTHER 🔥  — for when the above felt too easy
+// ----------------------------------------------------------------
+//  These are still ITERATOR exercises, but they lean on iterators
+//  as first-class citizens: reverse iterators, iterator arithmetic,
+//  distance, and passing a raw (begin, end) pair around. 💪
+// ================================================================
+
+// ----------------------------------------------------------------
+//  Exercise 3.4  —  Reverse a vector with REVERSE iterators
+// ----------------------------------------------------------------
+//  Every container also hands out "backwards bookmarks":
+//      v.rbegin()  -> points at the LAST element
+//      v.rend()    -> the stop sign, one BEFORE the first element
+//  Walking rbegin()..rend() with ++it moves you from back to front.
+//
+//  Build and return a NEW vector that is v read back-to-front.
+//  (Do it with rbegin()/rend() — no manual index juggling.)
+//
+//      reversedCopy({1, 2, 3, 4})  ->  {4, 3, 2, 1}
+//      reversedCopy({7})           ->  {7}
+//
+//  Hint: the range-constructor  vector<int>(first, last)  will happily
+//        copy from a pair of iterators — and rbegin()/rend() ARE a pair.
+vector<int> reversedCopy(const vector<int>& v) {
+    // TODO: construct a vector from v.rbegin() to v.rend()
+    return {};
+}
+
+// ----------------------------------------------------------------
+//  Exercise 3.5  —  Which SLOT holds the biggest value?
+// ----------------------------------------------------------------
+//  Sometimes you don't want the max VALUE, you want its POSITION
+//  (its 0-based index). Two iterator tools team up here:
+//      max_element(begin, end)  -> an ITERATOR to the largest element
+//      distance(begin, it)      -> how many steps from begin to it
+//  Subtracting those (or calling distance) gives you the index. 🎯
+//
+//  Return the index of the largest element. If the maximum appears
+//  more than once, max_element points at the FIRST one, so return
+//  that first index. (Assume v is not empty.)
+//
+//      indexOfMax({3, 9, 2, 9, 1})  ->  1   (first 9 is at index 1)
+//      indexOfMax({5})              ->  0
+//      indexOfMax({-5, -2, -8})     ->  1   (-2 is the biggest)
+//
+//  Hint: auto it = max_element(v.begin(), v.end());
+//        return distance(v.begin(), it);
+int indexOfMax(const vector<int>& v) {
+    // TODO: find max_element, then measure the distance from begin()
+    return -1;
+}
+
 // ----------------------------------------------------------------
 int main() {
     cout << "===== LEARN =====\n";
@@ -116,6 +171,15 @@ int main() {
     check("3.3 maxWithIterators({3,9,2,9,1}) == 9", maxWithIterators({3, 9, 2, 9, 1}) == 9);
     check("3.3.1 maxWithFold({3,9,2,9,1}) == 9", maxWithFold({3, 9, 2, 9, 1}) == 9);
     check("3.3 maxWithIterators({-5,-2,-8}) == -2", maxWithIterators({-5, -2, -8}) == -2);
-    
+
+    cout << "\n===== GOING FURTHER =====\n";
+    check("3.4 reversedCopy({1,2,3,4}) == {4,3,2,1}",
+          reversedCopy({1, 2, 3, 4}) == vector<int>({4, 3, 2, 1}));
+    check("3.4 reversedCopy({7}) == {7}",
+          reversedCopy({7}) == vector<int>({7}));
+    check("3.5 indexOfMax({3,9,2,9,1}) == 1", indexOfMax({3, 9, 2, 9, 1}) == 1);
+    check("3.5 indexOfMax({5}) == 0",         indexOfMax({5}) == 0);
+    check("3.5 indexOfMax({-5,-2,-8}) == 1",  indexOfMax({-5, -2, -8}) == 1);
+
     return 0;
 }

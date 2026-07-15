@@ -33,6 +33,7 @@
 #include <array>
 #include <stack>
 #include <queue>
+#include <vector>
 using namespace std;
 
 void check(const string& name, bool ok) {
@@ -97,6 +98,83 @@ string serveLine(queue<string> line) {
     return result;
 }
 
+// ================================================================
+//  GOING FURTHER 🔥
+// ================================================================
+//  Time to use these containers for the jobs they were born to do.
+//  A stack isn't just for reversing strings — it's the secret weapon
+//  behind calculators and code that has to remember "what came before".
+// ----------------------------------------------------------------
+
+// Exercise 7.4
+// ┌──────────────────────────────────────────────────────────────┐
+// │  Evaluate a Reverse Polish Notation (RPN) expression          │
+// └──────────────────────────────────────────────────────────────┘
+// In RPN, the operator comes AFTER its two operands, so there are no
+// brackets and no precedence rules to worry about — perfect for a stack!
+//
+// Walk through the tokens left to right:
+//   - if the token is a number, push it onto the stack
+//   - if it's an operator (+ - * /), pop TWO numbers, apply the
+//     operator, and push the result back
+// At the end, the single number left on the stack is the answer.
+//
+// IMPORTANT: order matters for - and /. The first number popped is the
+// RIGHT operand, the second popped is the LEFT operand:
+//     left OP right     (e.g. for "-":  second_pop - first_pop)
+//
+// Use INTEGER arithmetic (so 13 / 5 == 2).
+//
+// Examples:
+//   {"2","3","+"}                 -> 5        (2 + 3)
+//   {"2","1","+","3","*"}         -> 9        ((2 + 1) * 3)
+//   {"4","13","5","/","+"}        -> 6        (4 + (13 / 5) = 4 + 2)
+//
+// Hint 💡: to turn a numeric token string into an int, use stoi(token).
+//          To test the operator, compare token == "+", etc.
+int evalRPN(const vector<string>& tokens) {
+    stack<int> st;
+    // TODO: for each token in tokens:
+    //         if it's "+", "-", "*" or "/":
+    //             int right = st.top(); st.pop();
+    //             int left  = st.top(); st.pop();
+    //             push left OP right
+    //         else:
+    //             push stoi(token)
+    // TODO: return the value left on top of the stack
+    return 0;
+}
+
+// Exercise 7.5
+// ┌──────────────────────────────────────────────────────────────┐
+// │  Reverse the first k elements of a queue                      │
+// └──────────────────────────────────────────────────────────────┘
+// A queue only lets you touch the FRONT — so how do you flip the order
+// of its first few elements? Borrow a stack! 🥞
+//
+// Plan:
+//   1. Pop the first k elements off the queue and PUSH them on a stack.
+//   2. Pop them back OFF the stack (now reversed!) and push them onto
+//      the queue — this appends them to the BACK.
+//   3. The remaining (size - k) elements are still at the front; rotate
+//      them to the back by popping the front and re-pushing it, once for
+//      each of the remaining elements. Now everything is in order again.
+//
+// The queue is passed BY VALUE, so mutate it freely and return it.
+//
+// Example (shown front -> back):
+//   [1,2,3,4,5], k = 3   ->   [3,2,1,4,5]
+//   [10,20,30],  k = 2   ->   [20,10,30]
+//
+// Hint 💡: after step 2 the queue looks like [4,5,3,2,1]; step 3 rotates
+//          the leftover 4 and 5 (size - k = 2 of them) to the back.
+queue<int> reverseFirstK(queue<int> q, int k) {
+    // TODO: 1) move the first k front elements onto a stack
+    // TODO: 2) drain the stack back onto the queue (reversed)
+    // TODO: 3) rotate the remaining (q.size() - k) elements to the back
+    return q;
+}
+
 // ----------------------------------------------------------------
 int main() {
     cout << "===== LEARN =====\n";
@@ -113,5 +191,37 @@ int main() {
     queue<string> line;
     line.push("A"); line.push("B"); line.push("C");
     check("7.3 serveLine(A,B,C) == \"A,B,C\"", serveLine(line) == "A,B,C");
+
+    cout << "\n===== GOING FURTHER =====\n";
+    check("7.4 evalRPN({2,3,+}) == 5",
+          evalRPN({"2", "3", "+"}) == 5);
+    check("7.4 evalRPN({2,1,+,3,*}) == 9",
+          evalRPN({"2", "1", "+", "3", "*"}) == 9);
+    check("7.4 evalRPN({4,13,5,/,+}) == 6",
+          evalRPN({"4", "13", "5", "/", "+"}) == 6);
+    check("7.4 evalRPN({10,3,-}) == 7",
+          evalRPN({"10", "3", "-"}) == 7);
+
+    // Small helper: flatten a queue to "a,b,c" so we can eyeball the order.
+    auto qToStr = [](queue<int> q) {
+        string s = "";
+        while (!q.empty()) {
+            if (!s.empty()) s += ",";
+            s += to_string(q.front());
+            q.pop();
+        }
+        return s;
+    };
+
+    queue<int> q1;
+    q1.push(1); q1.push(2); q1.push(3); q1.push(4); q1.push(5);
+    check("7.5 reverseFirstK([1,2,3,4,5], 3) == [3,2,1,4,5]",
+          qToStr(reverseFirstK(q1, 3)) == "3,2,1,4,5");
+
+    queue<int> q2;
+    q2.push(10); q2.push(20); q2.push(30);
+    check("7.5 reverseFirstK([10,20,30], 2) == [20,10,30]",
+          qToStr(reverseFirstK(q2, 2)) == "20,10,30");
+
     return 0;
 }

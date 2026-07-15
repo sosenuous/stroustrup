@@ -102,6 +102,61 @@ vector<int> doubled(const vector<int>& v) {
     return result;
 }
 
+// ================================================================
+//  GOING FURTHER 🔥  — for when the warm-up felt too easy
+// ================================================================
+//  These two go past push_back / indexing. Take your time, sketch
+//  the data on paper first, and mind the edge cases. 💪
+
+// ----------------------------------------------------------------
+// Exercise 1.4  🔄  rotateLeft
+// ----------------------------------------------------------------
+// Return a NEW vector equal to v "rotated left" by k positions:
+// each element slides k slots toward the front, and whatever falls
+// off the front wraps around to the back.
+//
+//   rotateLeft({1,2,3,4,5}, 2) -> {3,4,5,1,2}
+//   rotateLeft({10,20,30},  1) -> {20,30,10}
+//
+// Watch out: k can be 0, and k can be LARGER than v.size()
+// (rotating by size() lands you right back where you started, so
+//  a rotation by k really only depends on k % size()).
+// An empty vector stays empty.
+//
+// Hint: the element that ends up at the front is the one currently
+//       at index (k % size()). The modulo tames a big k for you. 🙂
+vector<int> rotateLeft(const vector<int>& v, int k) {
+    // TODO: build the rotated vector. Remember to use k % v.size()
+    //       (but only when v is non-empty!).
+    (void)v; (void)k;
+    return {};  // placeholder: NOT rotated yet
+}
+
+// ----------------------------------------------------------------
+// Exercise 1.5  🔀  transpose
+// ----------------------------------------------------------------
+// A matrix here is a vector of rows, each row a vector<int>, and
+// every row has the SAME length. The "transpose" flips it across
+// its diagonal: rows become columns and columns become rows.
+//
+//   transpose({{1,2,3},         {{1,4},
+//              {4,5,6}})    ->    {2,5},
+//                                 {3,6}}
+//
+// So an R-by-C matrix becomes a C-by-R matrix, and the element at
+// (row r, col c) moves to (row c, col r).
+//
+//   transpose({{7}})           -> {{7}}
+//   transpose({})              -> {}   (no rows in, no rows out)
+//
+// Hint: figure out C (the number of columns) from the first row,
+//       then create C new rows and fill them column by column. ✍️
+vector<vector<int>> transpose(const vector<vector<int>>& m) {
+    // TODO: return the transposed matrix.
+    (void)m;
+    return {};  // placeholder: NOT transposed yet
+}
+
 // ----------------------------------------------------------------
 int main() {
     cout << "===== LEARN =====\n";
@@ -118,5 +173,20 @@ int main() {
           sumVector({}) == 0);
     check("1.3 doubled({1,2,3}) == {2,4,6}",
           doubled({1, 2, 3}) == vector<int>({2, 4, 6}));
+
+    cout << "\n===== GOING FURTHER =====\n";
+    check("1.4 rotateLeft({1,2,3,4,5},2) == {3,4,5,1,2}",
+          rotateLeft({1, 2, 3, 4, 5}, 2) == vector<int>({3, 4, 5, 1, 2}));
+    check("1.4 rotateLeft({10,20,30},1) == {20,30,10}",
+          rotateLeft({10, 20, 30}, 1) == vector<int>({20, 30, 10}));
+    check("1.4 rotateLeft({1,2,3},0) == {1,2,3}",
+          rotateLeft({1, 2, 3}, 0) == vector<int>({1, 2, 3}));
+    check("1.4 rotateLeft({1,2,3,4},6) == {3,4,1,2}  (k > size)",
+          rotateLeft({1, 2, 3, 4}, 6) == vector<int>({3, 4, 1, 2}));
+    check("1.5 transpose({{1,2,3},{4,5,6}}) == {{1,4},{2,5},{3,6}}",
+          transpose({{1, 2, 3}, {4, 5, 6}}) ==
+              vector<vector<int>>({{1, 4}, {2, 5}, {3, 6}}));
+    check("1.5 transpose({{7}}) == {{7}}",
+          transpose({{7}}) == vector<vector<int>>({{7}}));
     return 0;
 }

@@ -91,6 +91,53 @@ map<char, int> charFrequency(const string& s) {
 }
 
 // ----------------------------------------------------------------
+//  GOING FURTHER 🔥
+// ----------------------------------------------------------------
+
+// ================================================================
+// Exercise 5.4 — Invert a map
+// ================================================================
+// Given a map<string,int> where every VALUE is unique, build the
+// "flipped" map<int,string> that turns each value into a key.
+//
+//   { "Ada":90, "Ben":75 }  ->  { 90:"Ada", 75:"Ben" }
+//
+// So looking up 90 in the result gives back "Ada".
+//
+// Hint: loop over m — each entry has .first (the string) and
+//       .second (the int) — then set result[entry.second] = entry.first;
+map<int, string> invertMap(const map<string, int>& m) {
+    map<int, string> result;
+    // TODO: for each entry in m, do result[entry.second] = entry.first;
+    return result;
+}
+
+// ================================================================
+// Exercise 5.5 — Most frequent word (alphabetical tie-break)
+// ================================================================
+// Given a list of words, find the one that appears MOST often.
+// If several words tie for the top count, return the one that comes
+// FIRST alphabetically.
+//
+//   {"pear","apple","pear","apple","apple"}  ->  "apple"  (3 beats 2)
+//   {"dog","cat","dog","cat"}                ->  "cat"    (tie 2-2, 'cat' < 'dog')
+//
+// Neat trick 🎩: build a map<string,int> of counts, then loop over it.
+// Because a map walks its keys in SORTED order, if you only replace the
+// current best when you find a STRICTLY greater count, the first word of
+// any tie (the alphabetically smallest) naturally wins.
+//
+// Hint: 1) map<string,int> count; for each w: count[w]++;
+//       2) start best="" with bestCount=-1;
+//          for each entry in count:
+//              if (entry.second > bestCount) { best=entry.first; bestCount=entry.second; }
+//       3) return best;
+string mostFrequentWord(const vector<string>& words) {
+    // TODO: replace this placeholder with the real logic described above
+    return "?";
+}
+
+// ----------------------------------------------------------------
 int main() {
     cout << "===== LEARN =====\n";
     learn();
@@ -108,5 +155,16 @@ int main() {
     check("5.3 charFrequency 'a' == 3", f['a'] == 3);
     check("5.3 charFrequency 'n' == 2", f['n'] == 2);
     check("5.3 charFrequency 'b' == 1", f['b'] == 1);
+
+    cout << "\n===== GOING FURTHER =====\n";
+    map<int, string> inv = invertMap({{"Ada", 90}, {"Ben", 75}});
+    map<int, string> invExpected = {{90, "Ada"}, {75, "Ben"}};
+    check("5.4 invertMap flips the whole map", inv == invExpected);
+    check("5.4 invertMap: 90 -> Ada",          inv[90] == "Ada");
+
+    check("5.5 mostFrequentWord clear winner",
+          mostFrequentWord({"pear", "apple", "pear", "apple", "apple"}) == "apple");
+    check("5.5 mostFrequentWord tie -> alphabetical",
+          mostFrequentWord({"dog", "cat", "dog", "cat"}) == "cat");
     return 0;
 }

@@ -3,7 +3,7 @@
 A hands-on introduction to the C++ **Standard Template Library (STL)** — the giant
 toolbox of ready-made containers and algorithms that comes free with C++.
 
-This course is 8 short lessons. Each lesson is **one file you can compile and run**.
+This course is 13 lessons. Each lesson is **one file you can compile and run**.
 Every file has two parts:
 
 1. **LEARN** — working example code. Read it, run it, see what it prints.
@@ -18,8 +18,9 @@ When you run a lesson, each exercise prints either:
 
 Your goal: turn every `[ ?? ]` into a `[PASS]`.
 
-If you get stuck, the fully-worked answers live in the `solutions/` folder — but
-try hard first. Struggling a little is how the learning sticks.
+If you get stuck, fully-worked answers for **every** lesson (1–13) live in the
+`solutions/` folder — but try hard first. Struggling a little is how the
+learning sticks.
 
 ---
 
@@ -35,6 +36,14 @@ try hard first. Struggling a little is how the learning sticks.
 | 6 | `exercises/06_set.cpp`        | `std::set` — a bag of *unique*, sorted things |
 | 7 | `exercises/07_containers.cpp` | `std::array`, `std::stack`, `std::queue` |
 | 8 | `exercises/08_lambdas.cpp`    | Lambdas — little functions you write inline |
+| 9 | `exercises/09_challenges.cpp` | Challenges — combine everything so far 🔥 |
+| 10 | `exercises/10_advanced.cpp`  | Advanced — the deep end (interview classics) 🌊 |
+| 11 | `exercises/11_closures.cpp`  | Closures — lambdas that remember state 🧠 |
+| 12 | `exercises/12_stl_limits.cpp`| STL to the limits — let the library do the work ⚙️ |
+| 13 | `exercises/13_big_boss.cpp`  | **Big Boss** — approximate string lookup / autocorrect 👑🐉 |
+
+Every lesson now also ends with a **`GOING FURTHER 🔥`** section — extra, tougher
+exercises for when the main ones feel too easy.
 
 ---
 

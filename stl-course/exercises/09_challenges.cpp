@@ -107,6 +107,46 @@ vector<int> mergedUnique(const vector<int>& a, const vector<int>& b) {
     return {};
 }
 
+// ================================================================
+//  GOING FURTHER — these bite harder. Take your time. 🧗
+// ================================================================
+
+// ----------------------------------------------------------------
+//  CHALLENGE 9.7 — Count anagram groups
+// ----------------------------------------------------------------
+// Two words are anagrams if one is a rearrangement of the other's
+// letters ("eat" and "tea"). Group the words so that anagrams land in
+// the same group, then return HOW MANY groups there are.
+//   {"eat","tea","tan","ate","nat","bat"} -> 3
+//         ({eat,tea,ate}, {tan,nat}, {bat})
+//   {"abc","cba","xyz"}                    -> 2
+//   {}                                     -> 0
+// Hint: what's a "fingerprint" that's identical for anagrams but
+//       different otherwise? Sort the letters of each word. Feed those
+//       fingerprints into a set<string> (or a map) — its size is your
+//       answer, since the set collapses duplicates for you. 🔑
+int countAnagramGroups(const vector<string>& words) {
+    // TODO
+    return -1;
+}
+
+// ----------------------------------------------------------------
+//  CHALLENGE 9.8 — Top two most frequent
+// ----------------------------------------------------------------
+// Return the TWO values that appear most often, most frequent FIRST.
+// If two values tie on frequency, the SMALLER value comes first.
+// (Assume there are always at least two distinct values.)
+//   {1,1,1,2,2,3}   -> {1,2}      (counts 3, 2, 1)
+//   {4,4,5,5,6}     -> {4,5}      (4 and 5 tie -> smaller first)
+//   {9,8,8,7,7,7}   -> {7,8}      (counts 3, 2, 1)
+// Hint: count with a map<int,int>, then move the (value,count) pairs
+//       into a vector and std::sort with a lambda: higher count first,
+//       and on equal counts, smaller value first. Take the first two.
+vector<int> topTwoFrequent(const vector<int>& v) {
+    // TODO
+    return {};
+}
+
 // ----------------------------------------------------------------
 int main() {
     cout << "===== CHALLENGES =====\n";
@@ -133,5 +173,21 @@ int main() {
 
     check("9.6 mergedUnique({3,1,2},{2,5,1}) == {1,2,3,5}",
           mergedUnique({3, 1, 2}, {2, 5, 1}) == vector<int>({1, 2, 3, 5}));
+
+    cout << "\n===== GOING FURTHER =====\n";
+
+    check("9.7 countAnagramGroups (eat/tea/... ) == 3",
+          countAnagramGroups({"eat", "tea", "tan", "ate", "nat", "bat"}) == 3);
+    check("9.7 countAnagramGroups({abc,cba,xyz}) == 2",
+          countAnagramGroups({"abc", "cba", "xyz"}) == 2);
+    check("9.7 countAnagramGroups({}) == 0",
+          countAnagramGroups({}) == 0);
+
+    check("9.8 topTwoFrequent({1,1,1,2,2,3}) == {1,2}",
+          topTwoFrequent({1, 1, 1, 2, 2, 3}) == vector<int>({1, 2}));
+    check("9.8 topTwoFrequent({4,4,5,5,6}) == {4,5}",
+          topTwoFrequent({4, 4, 5, 5, 6}) == vector<int>({4, 5}));
+    check("9.8 topTwoFrequent({9,8,8,7,7,7}) == {7,8}",
+          topTwoFrequent({9, 8, 8, 7, 7, 7}) == vector<int>({7, 8}));
     return 0;
 }

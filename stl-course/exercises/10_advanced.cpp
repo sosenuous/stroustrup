@@ -114,6 +114,44 @@ vector<pair<int, int>> mergeIntervals(vector<pair<int, int>> intervals) {
 }
 
 // ----------------------------------------------------------------
+//  10.7 — Longest substring without repeating characters  (boss level 👑)
+// ----------------------------------------------------------------
+// Return the LENGTH of the longest contiguous substring of s in which no
+// character repeats.
+//   "abcabcbb" -> 3   (the substring "abc")
+//   "bbbbb"    -> 1   (the substring "b")
+//   "pwwkew"   -> 3   (the substring "wke", NOT "pwke" — must be contiguous)
+//   "dvdf"     -> 3   (the substring "vdf")
+//   ""         -> 0
+// Idea: slide a WINDOW [left..right] across the string. Extend right one
+//       character at a time. If that character is already inside the window,
+//       shrink from the left until it isn't. The answer is the largest
+//       window width you ever see. A set<char> (or a last-seen map) tells you
+//       whether a character is currently in the window.
+int longestUniqueSubstring(const string& s) {
+    // TODO
+    return 0;
+}
+
+// ----------------------------------------------------------------
+//  10.8 — Maximum subarray sum (Kadane's algorithm)  (boss level 👑)
+// ----------------------------------------------------------------
+// Return the largest sum obtainable from any NON-EMPTY contiguous subarray.
+// Note the numbers can be negative, so you cannot just add the positives.
+//   {-2,1,-3,4,-1,2,1,-5,4} -> 6    (the run {4,-1,2,1})
+//   {1}                     -> 1
+//   {-1,-2,-3}              -> -1    (best you can do is one element)
+//   {5,4,-1,7,8}            -> 23    (the whole array)
+// Idea: sweep once. Keep a "best sum ending exactly here". At each element
+//       you either EXTEND the previous run or START FRESH at this element —
+//       whichever gives a bigger sum. Track the best value seen anywhere.
+//       (Seed both trackers with the first element so all-negative works.)
+int maxSubarraySum(const vector<int>& v) {
+    // TODO
+    return 0;
+}
+
+// ----------------------------------------------------------------
 int main() {
     cout << "===== ADVANCED =====\n";
 
@@ -144,5 +182,25 @@ int main() {
           mergeIntervals({{1, 3}, {2, 6}, {8, 10}, {15, 18}}) == want);
     check("10.6 mergeIntervals({{1,4},{4,5}}) == {{1,5}}",
           mergeIntervals({{1, 4}, {4, 5}}) == vector<pair<int, int>>({{1, 5}}));
+
+    cout << "\n===== GOING FURTHER (BOSS LEVEL 👑) =====\n";
+
+    check("10.7 longestUniqueSubstring(\"abcabcbb\") == 3",
+          longestUniqueSubstring("abcabcbb") == 3);
+    check("10.7 longestUniqueSubstring(\"bbbbb\") == 1",
+          longestUniqueSubstring("bbbbb") == 1);
+    check("10.7 longestUniqueSubstring(\"pwwkew\") == 3",
+          longestUniqueSubstring("pwwkew") == 3);
+    check("10.7 longestUniqueSubstring(\"dvdf\") == 3",
+          longestUniqueSubstring("dvdf") == 3);
+
+    check("10.8 maxSubarraySum({-2,1,-3,4,-1,2,1,-5,4}) == 6",
+          maxSubarraySum({-2, 1, -3, 4, -1, 2, 1, -5, 4}) == 6);
+    check("10.8 maxSubarraySum({1}) == 1",
+          maxSubarraySum({1}) == 1);
+    check("10.8 maxSubarraySum({-1,-2,-3}) == -1",
+          maxSubarraySum({-1, -2, -3}) == -1);
+    check("10.8 maxSubarraySum({5,4,-1,7,8}) == 23",
+          maxSubarraySum({5, 4, -1, 7, 8}) == 23);
     return 0;
 }

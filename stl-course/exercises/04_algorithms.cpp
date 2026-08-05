@@ -96,28 +96,38 @@ int howManyIf(const vector<int>& v, bool (*pred)(int)) {
 // (You may assume v is not empty.) Remember to dereference (*).
 int largest(const vector<int>& v) {
     // TODO: return the value max_element points at
-    return -1;
+    return *std::max_element(v.begin(), v.end()); 
 }
 
 // Exercise 4.4
 // Return the sum of v using std::accumulate (start the sum at 0).
 int total(const vector<int>& v) {
     // TODO: return accumulate(v.begin(), v.end(), 0)
-    return -1;
+    return accumulate(v.begin(), v.end(), 0);
 }
 
 // Exercise 4.5
 // Return true if `target` is present anywhere in v, using std::find.
 bool contains(const vector<int>& v, int target) {
-  // auto finder = [&](int value)
-  return false;
+  auto it = std::find(v.begin(), v.end(), target); 
+  return it != v.end();
 }
 
 // Exercise 4.5.1
 // Write a containsIf function that returns true if a test function returns true for any element of v, using std::find_if.
 bool containsIf(const vector<int>& v, bool (*pred)(int)) {
-    // TODO
-    return false;
+    auto it = std::find_if(v.begin(), v.end(), pred); 
+    return it != v.end() ;
+}
+
+// contains2 
+bool containsIf2OrMore(const vector<int>& v, bool (*pred)(int)) {
+//   3, -1, 4, 5, -1 , 9 
+//     ^    %    ^
+    auto losingsanity = std::find_if(v.begin(), v.end(), pred);
+    return (losingsanity != v.end()) && (std::find_if(losingsanity + 1, v.end(), pred)!= v.end());
+    
+    return std::find_if(find_if(v.begin(), v.end(),pred) +1, v.end(), pred) != v.end();
 }
 
 // ================================================================

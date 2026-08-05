@@ -46,7 +46,7 @@ void check(const string& name, bool ok) {
 void learn() {
     vector<int> v = {4, 7, 1, 9, 2, 8};
 
-    auto isEven = [](int x) { return x % 2 == 0; };
+    auto isEven = [v](int x) { return x % 2 == 0; }; // \x -> x % 2 == 0
     cout << "isEven(4) = " << isEven(4) << ", isEven(7) = " << isEven(7) << "\n";
 
     int evens = count_if(v.begin(), v.end(), isEven);
@@ -54,7 +54,7 @@ void learn() {
 
     // Sort descending using a lambda comparator:
     sort(v.begin(), v.end(), [](int a, int b) { return a > b; });
-em    cout << "Descending: ";
+    cout << "Descending: ";
     for (int x : v) cout << x << " ";
     cout << "\n";
 

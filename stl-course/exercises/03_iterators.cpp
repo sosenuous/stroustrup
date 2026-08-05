@@ -28,6 +28,7 @@
 #include <string>
 #include <algorithm>
 #include <iterator>
+#include <numeric>
 using namespace std;
 
 void check(const string& name, bool ok) {
@@ -74,6 +75,7 @@ int firstElement(const vector<int>& v) {
 int sumWithIterators(const vector<int>& v) {
     int total = 0;
     for (auto it = v.begin(); it != v.end(); ++it) {
+        total += *it;
     }
     return total;
 }
@@ -82,9 +84,10 @@ int sumWithIterators(const vector<int>& v) {
 // Write a fold expression to sum every element of v. (Hint: use std::accumulate.) where the folding
 // expression is a lambda function that takes two arguments and returns their sum.
 int sumWithFold(const vector<int>& v) {
-    // TODO
-    return -1;
-}   
+    return std::accumulate(v.begin(), v.end(), 0, [](int a, int b) {
+        return a + b; 
+    } );  
+}
 
 // Exercise 3.3
 // Return the LARGEST value in v, found by hand with an iterator loop.
@@ -101,10 +104,26 @@ int maxWithIterators(const vector<int>& v) {
 
 // Exercise 3.3.1
 // Return the LARGEST value in v, found by hand with accumulate and a lambda function. 
+// template< class InputIt, class T, class BinaryOp >
+// T accumulate( InputIt first, InputIt last, T init, BinaryOp op );
+// -- binary operator: T fun(const T &a, const Type2 &b); 
+// foldr :: (a -> b -> a ) -> a -> [b]-> a
 int maxWithFold(const vector<int>& v) {
-    // TODO
-    return -1;
+    return std::accumulate(v.begin(), 
+                            v.end(), 
+                            INT_MIN, 
+                            [](int current_max, int x) { if (x> current_max) return x; else return current_max;} );
 }
+
+// template<class InputIt, class T, class BinaryOperation>
+// constexpr // since C++20
+// T accumulate(InputIt first, InputIt last, T init, BinaryOperation op)
+// {
+//     for (; first != last; ++first)
+//         init = op(std::move(init), *first); // std::move since C++20
+    
+//     return init;
+// }
 
 // ================================================================
 //  GOING FURTHER 🔥  — for when the above felt too easy
@@ -132,7 +151,7 @@ int maxWithFold(const vector<int>& v) {
 //        copy from a pair of iterators — and rbegin()/rend() ARE a pair.
 vector<int> reversedCopy(const vector<int>& v) {
     // TODO: construct a vector from v.rbegin() to v.rend()
-    return {};
+    return vector<int>(v.rbegin(), v.rend());
 }
 
 // ----------------------------------------------------------------
@@ -155,8 +174,8 @@ vector<int> reversedCopy(const vector<int>& v) {
 //  Hint: auto it = max_element(v.begin(), v.end());
 //        return distance(v.begin(), it);
 int indexOfMax(const vector<int>& v) {
-    // TODO: find max_element, then measure the distance from begin()
-    return -1;
+    auto it = std::max_element(v.begin(), v.end());
+    return std::distance(v.begin(), it);// TODO: find max_element, then measure the distance from begin()
 }
 
 // ----------------------------------------------------------------

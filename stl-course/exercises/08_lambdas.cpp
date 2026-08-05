@@ -54,7 +54,7 @@ void learn() {
 
     // Sort descending using a lambda comparator:
     sort(v.begin(), v.end(), [](int a, int b) { return a > b; });
-    cout << "Descending: ";
+em    cout << "Descending: ";
     for (int x : v) cout << x << " ";
     cout << "\n";
 

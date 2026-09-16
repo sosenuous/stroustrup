@@ -68,7 +68,9 @@ void learn() {
 // Return the sum of a fixed 5-element array.
 int sumArray(const array<int, 5>& a) {
     int total = 0;
-    // TODO: loop over a (range-based for works on array too) and add each up
+    for (int num : a){
+        total += num;
+    }
     return total;
 }
 
@@ -78,8 +80,13 @@ int sumArray(const array<int, 5>& a) {
 // reverseWithStack("abc") -> "cba".
 string reverseWithStack(const string& s) {
     stack<char> st;
-    // TODO: push each char of s onto st
+    for (char ch : s) st.push(ch);
+        
     string result = "";
+    while (!st.empty()) { 
+        result += st.top();
+        st.pop();
+    }
     // TODO: while st is not empty: append st.top() to result, then st.pop()
     return result;
 }
@@ -91,10 +98,13 @@ string reverseWithStack(const string& s) {
 // The queue is passed BY VALUE so you're free to drain it.
 string serveLine(queue<string> line) {
     string result = "";
-    // TODO: while line is not empty:
-    //         - if result isn't empty, append a comma ","
-    //         - append line.front()
-    //         - line.pop()
+    while(!line.empty()) { 
+        if (!result.empty()) {
+            result += ","; 
+        }
+        result += line.front();
+        line.pop(); 
+    }
     return result;
 }
 
@@ -132,8 +142,6 @@ string serveLine(queue<string> line) {
 //
 // Hint 💡: to turn a numeric token string into an int, use stoi(token).
 //          To test the operator, compare token == "+", etc.
-int evalRPN(const vector<string>& tokens) {
-    stack<int> st;
     // TODO: for each token in tokens:
     //         if it's "+", "-", "*" or "/":
     //             int right = st.top(); st.pop();
@@ -142,6 +150,47 @@ int evalRPN(const vector<string>& tokens) {
     //         else:
     //             push stoi(token)
     // TODO: return the value left on top of the stack
+int op(stack<int>&tokens, int (* o )(int , int)) {
+    int r = tokens.top(); tokens.pop();
+    int l = tokens.top(); tokens.pop();
+    tokens.push( o(l,r));
+}
+
+int evalRPM(const vector<string> & tokens) {
+    stack<int> st; 
+
+    for (string ch : tokens) {
+        if (ch == "+") {
+            int l = st.top(); st.pop();
+            int r = st.top(); st.pop();
+            st.push(l + r);
+
+        }
+
+        else if (ch == "-") {
+            int r = st.top(); st.pop(); 
+            int l = st.top(); st.pop(); 
+
+            st.push(l - r);
+        }
+
+        else if (ch == "*") {
+            int r = st.top(); st.pop(); 
+            int l = st.top(); st.pop(); 
+
+            st.push(l * r);
+        } 
+
+        else if (ch == "/") {
+            int r = st.top(); st.pop();
+            int l = st.top(); st.pop(); 
+            st.push(l / r);
+        }
+        
+        else {st.push(stoi(ch));};
+
+
+    }
     return 0;
 }
 
@@ -169,9 +218,23 @@ int evalRPN(const vector<string>& tokens) {
 // Hint 💡: after step 2 the queue looks like [4,5,3,2,1]; step 3 rotates
 //          the leftover 4 and 5 (size - k = 2 of them) to the back.
 queue<int> reverseFirstK(queue<int> q, int k) {
+    stack<int> temp;
     // TODO: 1) move the first k front elements onto a stack
+    int l = k;
+    while (l-- ) { 
+        temp.push(q.front()); 
+        q.pop();
+    }
     // TODO: 2) drain the stack back onto the queue (reversed)
+    while (!temp.empty()) {
+        q.push(temp.top());
+        temp.pop();
+    }
     // TODO: 3) rotate the remaining (q.size() - k) elements to the back
+    while (q.size() - k--) {
+        q.push(q.front());
+        q.pop();
+    }
     return q;
 }
 

@@ -73,7 +73,7 @@ void learn() {
 // Return how many numbers in v are even, using count_if + a lambda.
 int countEven(const vector<int>& v) {
     // TODO: return count_if(v.begin(), v.end(), [](int x){ return ...; });
-    return -1;
+    return count_if(v.begin(), v.end(), [] (int x)  { return x % 2 == 0; });;
 }
 
 // Exercise 8.2
@@ -81,10 +81,39 @@ int countEven(const vector<int>& v) {
 // {"bbb","a","cc"} -> {"a","cc","bbb"}.
 // Hint: sort with a lambda comparator that compares a.length() < b.length().
 vector<string> sortByLength(vector<string> words) {
-    // TODO: sort(words.begin(), words.end(),
-    //            [](const string& a, const string& b){ return ...; });
-    return words;
+    sort(words.begin(), words.end(), [](const string & a, const string& b) { return a.length() < b.length()});
+    return;
 }
+
+
+bool lexCompare(const string & a , const string &b) {
+
+    // lexicographic ordering
+    // a < ab < aaab < aaac < aaad ... etc. without using string::operator<
+    // skip euqal prefix
+    // then compare the first letter of what is left
+
+    auto i1 = a.begin();
+    auto i2 = b.begin(); 
+    for (; i1 != a.end() && i2 != b.end(); i1++ , i2++); 
+
+    // either i1 == a.end() || i2 == b.end() 
+
+    if (i1 == a.end()) 
+        if (i2 != b.end()) 
+            return true; // a is shorter then b
+        else 
+            return false; // they are equal length and equal
+    else     
+        if (i2 == b.end()) // b is shorter 
+            return false;
+        else 
+            // they have equal prefix, and none of them are at the end
+            return *i1 < *i2;
+
+
+}
+
 
 // Exercise 8.3
 // Return how many numbers in v are strictly greater than `threshold`,
